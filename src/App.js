@@ -1,24 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import {createBrowserRouter,RouterProvider} from "react-router-dom";
+import Navbar from './components/Navbar';
+import Home from './pages/Home'
+import Video from './pages/Video';
+import VideoDetail from './pages/VideoDetail';
+import NotFound from './pages/NotFound'
 
+import Root from './pages/Root'
 function App() {
+  const router = createBrowserRouter([
+    //각각 라우터에서 사용할수 있는 배열을 전달 
+    {
+      path:'/',
+      element : <Root/>,
+      errorElement:<NotFound />,
+      children:[
+        {index:true, element:<Home />},
+        {path:'/video',element:<Video />},
+        {path:'/video/:videoId',element:<VideoDetail />}
+      ]
+    }
+  ])
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+      <RouterProvider router={router} >
+      </RouterProvider>
+    
   );
 }
 
